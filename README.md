@@ -1,17 +1,23 @@
 # slog_unwraps [![Build Status](https://api.travis-ci.org/najamelan/slog_unwraps.svg?branch=master)](https://api.travis-ci.org/najamelan/slog_unwraps)[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
-
-
-Syntactic sugar to slog an error before panicking. It will add caller file and line information to the log statement,
+Syntactic sugar to slog an error before unwrapping. It will add caller file and line information to the log statement,
 but know that that only makes sense in debug mode. In release mode this information will either be missing or unreliable.
 
+Anyways, this is meant to make your life easier while developping.
+
+At first I had an `expects` function as well to be able to add context, but I really think you should use the `failure`
+crate, which provides a `context` method on errors, and it's much cleaner, so `expects` no longer exists. If you don't
+want to use `failure`, you will have to make sure your errors display sensible messages.
+
 ### Example
+
+run with `cargo run --example basic`
 
 ```rust
 use
 {
    std          :: { fs::File                       } ,
-   slog         :: { Drain, Level, Logger, o        } ,
+   slog         :: { Drain, Level, Logger, o, crit  } ,
    slog_term    :: { FullFormat, PlainSyncDecorator } ,
    slog_unwraps :: { ResultExt                      } ,
 };
@@ -20,21 +26,27 @@ fn main()
 {
    let plain = PlainSyncDecorator::new( std::io::stderr() )                  ;
    let log   = Logger::root( FullFormat::new( plain ).build().fuse(), o!() ) ;
-
-   let f = File::open( "dont.exist" );
-   let g = File::open( "dont.exist" );
-
    // This will output:
    //
    // Mar 08 18:13:52.034 CRIT PANIC - fn `main` calls `unwraps` @ examples/basic.rs:20 -> Error: No such file or directory (os error 2)
-   // before panicking
    //
-   f.unwraps( &log );
-
+   // and then will call unwrap for you
+   //
+   let f = File::open( "dont.exist" );
+   let _file = f.unwraps( &log );
    // This is equivalent. Of course you can do something else with the result after logging rather than unwrapping. This only logs
    // if the result is an error.
    //
-   g.log( &log, Level::Critical ).unwrap();
+   let g = File::open( "dont.exist" );
+   let _file = g.log( &log, Level::Critical ).unwrap();
+   // Without this crate, everytime you want to unwrap, you would write something like:
+   //
+   let h = File::open( "dont.exist" );
+   let _file = match h
+   {
+      Ok ( f ) => f,
+      Err( e ) => { crit!( log, "{}", e ); panic!() }
+   };
 }
 ```
 
