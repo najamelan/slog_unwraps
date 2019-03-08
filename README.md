@@ -34,5 +34,5 @@ fn main()
    //
    g.log( &log, Level::Critical ).unwrap();
 }
-```rust
+```
 
