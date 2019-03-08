@@ -1,4 +1,6 @@
-# slog_unwraps
+# slog_unwraps [![Build Status](https://api.travis-ci.org/najamelan/slog_unwraps.svg?branch=master)](https://api.travis-ci.org/najamelan/slog_unwraps)[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+
+
 
 Syntactic sugar to slog an error before panicking. It will add caller file and line information to the log statement,
 but know that that only makes sense in debug mode. In release mode this information will either be missing or unreliable.
