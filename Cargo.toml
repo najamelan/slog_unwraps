@@ -1,0 +1,21 @@
+[package]
+
+	name    = "slog_unwraps"
+	version = "0.1.0"
+	authors = [ "Naja Melan <najamelan@autistici.org>" ]
+	edition = "2018"
+
+[dependencies]
+
+	slog      = "2.4.1"
+	backtrace = "0.3.14"
+	regex     = "1.1.2"
+
+
+[dev-dependencies]
+
+	pretty_assertions = "0.6.1"
+	slog-term         = "2.4.0"
+	lazy_static       = "1.3.0"
+
+
