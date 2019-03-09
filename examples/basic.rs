@@ -10,6 +10,8 @@ fn main()
 {
    let plain = PlainSyncDecorator::new( std::io::stderr() )                  ;
    let log   = Logger::root( FullFormat::new( plain ).build().fuse(), o!() ) ;
+
+
    // This will output:
    //
    // Mar 08 18:13:52.034 CRIT PANIC - fn `main` calls `unwraps` @ examples/basic.rs:20 -> Error: No such file or directory (os error 2)
@@ -18,11 +20,15 @@ fn main()
    //
    let f = File::open( "dont.exist" );
    let _file = f.unwraps( &log );
+
+
    // This is equivalent. Of course you can do something else with the result after logging rather than unwrapping. This only logs
    // if the result is an error.
    //
    let g = File::open( "dont.exist" );
    let _file = g.log( &log, Level::Critical ).unwrap();
+
+
    // Without this crate, everytime you want to unwrap, you would write something like:
    //
    let h = File::open( "dont.exist" );

@@ -76,7 +76,7 @@ pub trait ResultExt<T, E>
 	///
 	fn unwraps( self, log: &Logger ) -> T;
 
-	/// logs a potential error in the result and returns the result intact.
+	/// Logs a potential error in the result and returns the result intact.
 	///
 	fn log    ( self, log: &Logger, lvl: slog::Level ) -> Result<T,E>;
 }
