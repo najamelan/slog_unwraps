@@ -18,20 +18,20 @@ fn main()
    //
    // and then will call unwrap for you
    //
-   let f = File::open( "dont.exist" );
+   let f     = File::open( "dont.exist" );
    let _file = f.unwraps( &log );
 
 
    // This is equivalent. Of course you can do something else with the result after logging rather than unwrapping. This only logs
    // if the result is an error.
    //
-   let g = File::open( "dont.exist" );
+   let g     = File::open( "dont.exist" );
    let _file = g.log( &log, Level::Critical ).unwrap();
 
 
    // Without this crate, everytime you want to unwrap, you would write something like:
    //
-   let h = File::open( "dont.exist" );
+   let h     = File::open( "dont.exist" );
    let _file = match h
    {
       Ok ( f ) => f,
