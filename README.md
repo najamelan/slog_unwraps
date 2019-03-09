@@ -1,13 +1,14 @@
 # slog_unwraps [![docs](https://docs.rs/slog_unwraps/badge.svg)](https://docs.rs/slog_unwraps) ![code size](https://img.shields.io/github/languages/code-size/najamelan/slog_unwraps.svg) [![Build Status](https://api.travis-ci.org/najamelan/slog_unwraps.svg?branch=master)](https://travis-ci.org/najamelan/slog_unwraps) [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
-Syntactic sugar to slog an error before unwrapping. It will add caller file and line information to the log statement,
-but know that that only makes sense in debug mode. In release mode this information will either be missing or unreliable.
+Syntactic sugar to slog an error before [unwrapping](https://doc.rust-lang.org/std/result/enum.Result.html#method.unwrap).
+It will add caller file and line information to the log statement, but know that that only makes sense in debug mode.
+In release mode this information will either be missing or unreliable.
 
 Anyways, this is meant to make your life easier while developping.
 
-At first I had an `expects` function as well to be able to add context, but I really think you should use the `failure`
-crate, which provides a `context` method on errors, and it's much cleaner, so `expects` no longer exists. If you don't
-want to use `failure`, you will have to make sure your errors display sensible messages.
+At first I had an `expects` function as well to be able to add context, but I really think you should use the
+[`failure` crate](https://docs.rs/failure), which provides a `context` method on errors, and it's much cleaner, so `expects`
+no longer exists. If you don't want to use `failure`, you will have to make sure your errors display sensible messages.
 
 ### Example
 

@@ -1,11 +1,12 @@
-//! Syntactic sugar to slog an error before unwrapping. It will add caller file and line information to the log statement,
-//! but know that that only makes sense in debug mode. In release mode this information will either be missing or unreliable.
+//! Syntactic sugar to slog an error before [unwrapping](https://doc.rust-lang.org/std/result/enum.Result.html#method.unwrap).
+//! It will add caller file and line information to the log statement, but know that that only makes sense in debug mode.
+//! In release mode this information will either be missing or unreliable.
 //!
 //! Anyways, this is meant to make your life easier while developping.
 //!
-//! At first I had an `expects` function as well to be able to add context, but I really think you should use the `failure`
-//! crate, which provides a `context` method on errors, and it's much cleaner, so `expects` no longer exists. If you don't
-//! want to use `failure`, you will have to make sure your errors display sensible messages.
+//! At first I had an `expects` function as well to be able to add context, but I really think you should use the
+//! [`failure` crate](https://docs.rs/failure), which provides a `context` method on errors, and it's much cleaner, so `expects`
+//! no longer exists. If you don't want to use `failure`, you will have to make sure your errors display sensible messages.
 //!
 //! ## Example
 //!
@@ -66,7 +67,7 @@ use
 };
 
 
-/// Extends the std::result::Result type with extra methods to ease logging of errors.
+/// Extends the [std::result::Result](https://doc.rust-lang.org/std/result/enum.Result.html) type with extra methods to ease logging of errors.
 ///
 pub trait ResultExt<T, E>
 
@@ -254,7 +255,7 @@ mod tests
 		let unlocked = buf.lock().unwrap();
 
 		assert!( result.is_err() );
-		assert_eq!( &std::str::from_utf8( unlocked.deref() ).unwrap()[19..], " CRIT PANIC - fn `boom` calls `unwraps` @ src/lib.rs:248 -> Error: No such file or directory (os error 2)\n" )
+		assert_eq!( &std::str::from_utf8( unlocked.deref() ).unwrap()[19..], " CRIT PANIC - fn `boom` calls `unwraps` @ src/lib.rs:249 -> Error: No such file or directory (os error 2)\n" )
 	}
 
 
@@ -274,6 +275,6 @@ mod tests
 		let unlocked = buf.lock().unwrap();
 
 		assert!( result.is_err() );
-		assert_eq!( &std::str::from_utf8( unlocked.deref() ).unwrap()[19..], " CRIT PANIC - fn `{{closure}}` calls `unwraps` @ src/lib.rs:271 -> Error: No such file or directory (os error 2)\n" )
+		assert_eq!( &std::str::from_utf8( unlocked.deref() ).unwrap()[19..], " CRIT PANIC - fn `{{closure}}` calls `unwraps` @ src/lib.rs:272 -> Error: No such file or directory (os error 2)\n" )
 	}
 }
