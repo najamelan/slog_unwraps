@@ -28,9 +28,10 @@
 //!    let log   = Logger::root( FullFormat::new( plain ).build().fuse(), o!() ) ;
 //!
 //!
-//!    // This will output:
+//!    // This will output (in one line, wrapped here for readablility):
 //!    //
-//!    // Mar 08 18:13:52.034 CRIT PANIC - fn `main` calls `unwraps` @ examples/basic.rs:20 -> Error: No such file or directory (os error 2)
+//!    // Mar 08 18:13:52.034 CRIT PANIC - fn `main` calls `unwraps` @ examples/basic.rs:20
+//!    // -> Error: No such file or directory (os error 2)
 //!    //
 //!    // and then will call unwrap for you
 //!    //
@@ -38,8 +39,8 @@
 //!    let _file = f.unwraps( &log );
 //!
 //!
-//!    // This is equivalent. Of course you can do something else with the result after logging rather than unwrapping. This only logs
-//!    // if the result is an error.
+//!    // This is equivalent. Of course you can do something else with the result after logging
+//!    // rather than unwrapping. This only logs if the result is an error.
 //!    //
 //!    let g     = File::open( "dont.exist" );
 //!    let _file = g.log( &log, Level::Critical ).unwrap();
@@ -254,7 +255,7 @@ mod tests
 		let unlocked = buf.lock().unwrap();
 
 		assert!( result.is_err() );
-		assert_eq!( &std::str::from_utf8( unlocked.deref() ).unwrap()[19..], " CRIT PANIC - fn `boom` calls `unwraps` @ src/lib.rs:248 -> Error: No such file or directory (os error 2)\n" )
+		assert_eq!( &std::str::from_utf8( unlocked.deref() ).unwrap()[19..], " CRIT PANIC - fn `boom` calls `unwraps` @ src/lib.rs:249 -> Error: No such file or directory (os error 2)\n" )
 	}
 
 
@@ -274,6 +275,6 @@ mod tests
 		let unlocked = buf.lock().unwrap();
 
 		assert!( result.is_err() );
-		assert_eq!( &std::str::from_utf8( unlocked.deref() ).unwrap()[19..], " CRIT PANIC - fn `{{closure}}` calls `unwraps` @ src/lib.rs:271 -> Error: No such file or directory (os error 2)\n" )
+		assert_eq!( &std::str::from_utf8( unlocked.deref() ).unwrap()[19..], " CRIT PANIC - fn `{{closure}}` calls `unwraps` @ src/lib.rs:272 -> Error: No such file or directory (os error 2)\n" )
 	}
 }

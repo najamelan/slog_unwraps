@@ -30,9 +30,10 @@ fn main()
    let log   = Logger::root( FullFormat::new( plain ).build().fuse(), o!() ) ;
 
 
-   // This will output:
+   // This will output (in one line, wrapped here for readablility):
    //
-   // Mar 08 18:13:52.034 CRIT PANIC - fn `main` calls `unwraps` @ examples/basic.rs:20 -> Error: No such file or directory (os error 2)
+   // Mar 08 18:13:52.034 CRIT PANIC - fn `main` calls `unwraps` @ examples/basic.rs:20
+   // -> Error: No such file or directory (os error 2)
    //
    // and then will call unwrap for you
    //
@@ -40,8 +41,8 @@ fn main()
    let _file = f.unwraps( &log );
 
 
-   // This is equivalent. Of course you can do something else with the result after logging rather than unwrapping. This only logs
-   // if the result is an error.
+   // This is equivalent. Of course you can do something else with the result after logging
+   // rather than unwrapping. This only logs if the result is an error.
    //
    let g     = File::open( "dont.exist" );
    let _file = g.log( &log, Level::Critical ).unwrap();
